@@ -1,11 +1,22 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import sequelize from './dbConfig.js';
 import rutaUtilizator from './rute/utilizator.js';
 
 let app = express(); //aplicatia server
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+//testam daca se poate efectua conexiunea cu baza de date
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log("Conexiunea cu baza de date s-a realizat cu succes!");
+    })
+    .catch(err => {
+        console.log("Nu se poate realiza conexiunea cu baza de date: " , err);
+    })
 
 app.use(rutaUtilizator); //notificam sa se foloseasca rutele pentru utilizator
 
