@@ -1,10 +1,14 @@
 import sequelize from '../dbConfig.js';
 import Utilizator from '../entitati/Utilizator.js';
 import bcrypt from 'bcrypt';
+import Notita from '../entitati/Notita.js';
 
 //adaugare un utilizator nou
 export async function adaugareUtilizator(utilizator){
-    await Utilizator.create(utilizator);
+    await Utilizator.create(utilizator, {
+        include: [
+            {model: Notita, as: "Notite"}
+        ]});
 }
 
 export async function preluareUtilizator(){
