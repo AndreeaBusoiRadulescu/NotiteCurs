@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import sequelize from '../dbConfig.js';
 
-const Notita =sequelize.define("Notita",{
+const Notita = sequelize.define("Notita",{
     IdNotita:{
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -15,7 +15,7 @@ const Notita =sequelize.define("Notita",{
 
     UtilizatorId:{
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
     },
 
     Continut:{
@@ -24,7 +24,7 @@ const Notita =sequelize.define("Notita",{
     },
 
     DataNotita:{
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         allowNull: true
     }
 })

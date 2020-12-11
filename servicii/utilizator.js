@@ -4,15 +4,24 @@ import bcrypt from 'bcrypt';
 import Notita from '../entitati/Notita.js';
 
 //adaugare un utilizator nou
-export async function adaugareUtilizator(utilizator){
-    await Utilizator.create(utilizator, {
+ export async function adaugareUtilizator(utilizator){
+   return await Utilizator.create(utilizator, {
         include: [
             {model: Notita, as: "Notite"}
         ]});
 }
 
 export async function preluareUtilizator(){
-    return await Utilizator.findAll();
+    return await Utilizator.findAll(
+        {
+            include: [
+                {
+                    model: Notita,
+                    as: "Notite"
+                }
+            ]
+        }
+    )
 }
 
 export async function preluareUtilizatorDupaId(id){
@@ -38,13 +47,22 @@ export async function modificareUtilizator(id, utilizator){
 
 export async function stergereUtilizator(id){
     
-    let deleteEntity = await preluareUtilizatorDupaId(id);
+    let deleteEntity = await Utilizator.findByPk(id);
 
     if (!deleteEntity)
     {
-        console.log("Magazinul nu are id-ul specificat");
+        console.log("Elementul nu exista, deci nu poate fi sters");
         return;
     }
-
-    return await deleteEntity.destroy();
+    try{
+        return await deleteEntity.destroy();
+    }catch(e){
+        let mesaj = "Aceasta entitate este folosita deja, deci nu poate fi stearsa"
+        if(e.mesaj.includes("FK_Notita_Utilizator")){
+            console.log(mesaj);
+            return mesaj;
+        }
+        else
+            throw(e);
+    }
 }
