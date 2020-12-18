@@ -25,7 +25,7 @@ const Notita = sequelize.define("Notita",{
     },
 
     DataNotita:{
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: true
     }
 })

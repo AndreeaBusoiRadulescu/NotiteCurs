@@ -5,32 +5,58 @@ import bcrypt from 'bcrypt';
 
 //adaugare un utilizator nou
  export async function adaugareUtilizator(utilizator){
-   return await Utilizator.create(utilizator);
+   return {
+       code : 201,
+       res : await Utilizator.create(utilizator)
+   }
 }
 
-export async function preluareUtilizator(){
-    return await Utilizator.findAll();
+export async function preluareUtilizatori(){
+    return{
+        code : 200,
+        res : await Utilizator.findAll()
+    } 
 }
 
 export async function preluareUtilizatorDupaId(id){
-    return await Utilizator.findByPk(id);
+    let getEntity = await Utilizator.findByPk(id);
+
+    if (!getEntity)
+    {
+        return{
+            code : 404,
+            res :  "Elementul cu id-ul cautat nu exista"
+        }
+    }
+
+    return {
+        code: 200,
+        res : getEntity
+    }
 }
 
 export async function modificareUtilizator(id, utilizator){
     if (parseInt(id) !== utilizator.UtilizatorId){
-        console.log("Id ul utilizatorului nu corespunde cu id-ul introdus");
-        return;
+        return {
+            code: 400,
+            res : "Id ul utilizatorului nu corespunde cu id-ul introdus"
+        }
     }
 
-    let updateEntity = await preluareUtilizatorDupaId(id);
+    let updateEntity = (await preluareUtilizatorDupaId(id)).res;
 
     if (!updateEntity)
     {
-        console.log("Nu exista utilizator cu acest id");
-        return;
+        return {
+            code: 404,
+            res : "Nu exista utilizator cu acest id"
+        }
     }
 
-    return await updateEntity.update(utilizator);
+    return {
+        code : 200,
+        res : await updateEntity.update(utilizator)
+    }
 }
 
 export async function stergereUtilizator(id){
@@ -39,11 +65,16 @@ export async function stergereUtilizator(id){
 
     if (!deleteEntity)
     {
-        console.log("Elementul nu exista, deci nu poate fi sters");
-        return;
+        return{
+            code : 404,
+            res :  "Elementul nu exista, deci nu poate fi sters"
+        }
     }
     //try{
-        return await deleteEntity.destroy();
+        return {
+            code : 200,
+            res : await deleteEntity.destroy()
+        }
     /*}catch(e){
         let mesaj = "Aceasta entitate este folosita deja, deci nu poate fi stearsa"
         if(e.mesaj.includes("FK_Notita_Utilizator")){
