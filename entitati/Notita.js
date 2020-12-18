@@ -5,6 +5,7 @@ const Notita = sequelize.define("Notita",{
     IdNotita:{
         type: Sequelize.INTEGER,
         primaryKey: true,
+        autoIncrement: true,
         allowNull: false
     },
 

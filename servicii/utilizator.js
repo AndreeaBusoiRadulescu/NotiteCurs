@@ -1,27 +1,15 @@
 import sequelize from '../dbConfig.js';
 import Utilizator from '../entitati/Utilizator.js';
 import bcrypt from 'bcrypt';
-import Notita from '../entitati/Notita.js';
+//import Notita from '../entitati/Notita.js';
 
 //adaugare un utilizator nou
  export async function adaugareUtilizator(utilizator){
-   return await Utilizator.create(utilizator, {
-        include: [
-            {model: Notita, as: "Notite"}
-        ]});
+   return await Utilizator.create(utilizator);
 }
 
 export async function preluareUtilizator(){
-    return await Utilizator.findAll(
-        {
-            include: [
-                {
-                    model: Notita,
-                    as: "Notite"
-                }
-            ]
-        }
-    )
+    return await Utilizator.findAll();
 }
 
 export async function preluareUtilizatorDupaId(id){
@@ -54,9 +42,9 @@ export async function stergereUtilizator(id){
         console.log("Elementul nu exista, deci nu poate fi sters");
         return;
     }
-    try{
+    //try{
         return await deleteEntity.destroy();
-    }catch(e){
+    /*}catch(e){
         let mesaj = "Aceasta entitate este folosita deja, deci nu poate fi stearsa"
         if(e.mesaj.includes("FK_Notita_Utilizator")){
             console.log(mesaj);
@@ -64,5 +52,5 @@ export async function stergereUtilizator(id){
         }
         else
             throw(e);
-    }
+    }*/
 }
