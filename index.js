@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import sequelize from './dbConfig.js';
 import rutaUtilizator from './rute/utilizator.js';
 import rutaNotita from './rute/notita.js';
+import rutaAtasament from './rute/atasament.js'
+
 
 let app = express(); //aplicatia server
 
@@ -22,10 +24,9 @@ sequelize
  // Utilizator.hasMany(Notita, {as: "Notite", foreignKey: "UtilizatorId"});
  // Notita.belongsTo(Utilizator, {foreignKey: "UtilizatorId"});
 
-
-
 app.use(rutaUtilizator); //notificam sa se foloseasca rutele pentru utilizator
-app.use(rutaNotita); //folosim rutele rotita
+//app.use(rutaNotita);
+app.use(rutaAtasament); //folosim rutele rotita
 
 let port = process.env.PORT || 8001;
 app.listen(port); //notificam sa se foloseasca portul specificat

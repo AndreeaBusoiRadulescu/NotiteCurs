@@ -31,3 +31,17 @@ GO
 IF OBJECT_ID('FK_Notita_Utilizator')IS NULL
    ALTER TABLE Notita ADD CONSTRAINT FK_Notita_Utilizator FOREIGN KEY (UtilizatorId) REFERENCES Utilizator(UtilizatorId)
 GO
+
+IF OBJECT_ID('Atasament') IS NULL
+CREATE TABLE Atasament
+(
+	IdAtasament INT NOT NULL IDENTITY(1,1),
+	IdNotita INT NOT NULL,
+	SursaAtasament NVARCHAR(200) NOT NULL,
+	CONSTRAINT PK_Atasament PRIMARY KEY (IdAtasament)
+)
+GO
+
+IF OBJECT_ID('FK_Atasament_Notita')IS NULL
+   ALTER TABLE Atasament ADD CONSTRAINT FK_Atasament_Notita FOREIGN KEY (IdNotita) REFERENCES Notita(IdNotita)
+GO
