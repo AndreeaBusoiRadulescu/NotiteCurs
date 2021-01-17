@@ -18,6 +18,7 @@ const Utilizator = sequelize.define("Utilizator", {
         type: Sequelize.STRING,
         allowNull: false
     }
+
 })
 
 export default Utilizator;

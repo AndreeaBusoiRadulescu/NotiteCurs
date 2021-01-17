@@ -1,22 +1,41 @@
 import express  from 'express';
-import Utilizator from '../entitati/Utilizator.js';
-import {adaugareUtilizator} from '../servicii/utilizator.js';
-import {preluareUtilizatori} from '../servicii/utilizator.js';
-import {preluareUtilizatorDupaId} from '../servicii/utilizator.js';
-import {modificareUtilizator} from '../servicii/utilizator.js';
-import {stergereUtilizator} from '../servicii/utilizator.js';
+import {
+    adaugareUtilizator, 
+    preluareUtilizatorLogin,
+    preluareUtilizatori, 
+    preluareUtilizatorDupaId, 
+    stergereUtilizator, 
+    modificareUtilizator 
+} from '../servicii/utilizator.js';
 
+import {
+    preluareNotiteDupaIdUtilizator
+} from '../servicii/notita.js';
 
 const router = express.Router(); //obtinem componenta de rutare a serverului
 
+router.route('/utilizator/:idUtilizator/notite').get(async (req, res) =>{
+    let ret = await preluareNotiteDupaIdUtilizator(req.params.idUtilizator);
+    res.status(ret.code).json(ret.res);
+})
+
 //inregistram rutele
 router.route('/utilizator').post( async (req, res) => {
+    //console.log("A venit cu: " + req.body.EmailAddress);
     let ret = await adaugareUtilizator(req.body);
     res.status(ret.code).json(ret.res);
 })
 
+
 router.route('/utilizator').get( async (req, res) => {
     let ret = await preluareUtilizatori();
+    res.status(ret.code).json(ret.res);
+})
+
+// /login?email=ceva@stud.ase.ro&password=44444
+router.route('/login').get( async (req, res) => {
+    console.log(req.query);
+    let ret = await preluareUtilizatorLogin(req.query.email, req.query.password);
     res.status(ret.code).json(ret.res);
 })
 

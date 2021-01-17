@@ -11,6 +11,30 @@ import bcrypt from 'bcrypt';
    }
 }
 
+export async function preluareUtilizatorLogin(email, password){
+    let getEntity = await Utilizator.findOne({
+        where:
+        {
+            EmailAddress: email,
+            Parola: password
+        }
+    });    
+
+    if (!getEntity)
+    {
+        return{
+            code : 404,
+            res :  "Email sau parola gresita"
+        }
+    }
+
+    return {
+        code: 200,
+        res : {id: getEntity.UtilizatorId}
+    }
+
+}
+
 export async function preluareUtilizatori(){
     return{
         code : 200,
@@ -70,18 +94,8 @@ export async function stergereUtilizator(id){
             res :  "Elementul nu exista, deci nu poate fi sters"
         }
     }
-    //try{
         return {
             code : 200,
             res : await deleteEntity.destroy()
         }
-    /*}catch(e){
-        let mesaj = "Aceasta entitate este folosita deja, deci nu poate fi stearsa"
-        if(e.mesaj.includes("FK_Notita_Utilizator")){
-            console.log(mesaj);
-            return mesaj;
-        }
-        else
-            throw(e);
-    }*/
 }

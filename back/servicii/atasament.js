@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt';
 import Atasament from '../entitati/Atasament.js';
 import Notita from '../entitati/Notita.js';
 
-Notita.hasMany(Atasament, {as: "Atasamente", foreignKey: "IdNotita"});
-Atasament.belongsTo(Notita, {foreignKey: "IdNotita"});
+// Notita.hasMany(Atasament, {as: "Atasamente", foreignKey: "IdNotita"});
+// Atasament.belongsTo(Notita, {foreignKey: "IdNotita"});
 
 
 export async function creareNotita(notita){
