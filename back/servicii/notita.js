@@ -74,4 +74,3 @@ export async function stergereNotita(id){
     }
         return await deleteEntity.destroy();
 }
-

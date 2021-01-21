@@ -12,6 +12,7 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import FormularNotita from './FormularNotita';
 
 
 class App extends React.Component {
@@ -128,6 +129,15 @@ class App extends React.Component {
                   </Route>
                     <Route path="/notite">
                     <PaginaNotite />
+                  </Route>
+
+                  {/*Pagina formular notita*/}
+                  <Route path="/formularnotita">
+                  <div className="text-center m-auto"  style={
+                    {width : '30%'}
+                    }>
+                      <FormularNotita/>
+                  </div>
                   </Route>
                   
                 </Switch> 
