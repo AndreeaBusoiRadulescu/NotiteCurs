@@ -7,29 +7,33 @@ class Signup extends React.Component
     constructor(props)
     {
         super(props);
+
+        //initializare
         this.state = {
             username : "",
             password: ""
         };
+        
+        // aceste bind-uri sunt necesare pentru a face `this` vizibil in callback
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        
     }
 
+    //pentru a sesiza schimbarile din campul Username realizate de utilizator
     handleUsernameChange(event) {
         this.setState({username: event.target.value});
     }
 
+    //pentru a sesiza schimbarile din campul Password realizate de utilizator
     handlePasswordChange(event) {
         this.setState({password: event.target.value});
     }
 
+    //la apasare pe butonul de inregistrare
     handleSubmit(event) {
-        // alert('A name was submitted: ' + this.state.username + "   " + this.state.password);
 
-        //Request post pt inserat utilizator nou
-        
+        //verificari pentru campurile introduse de utilizator
         if(this.state.username.length === 0)
         {
             alert("Email-ul nu poate fi gol!");
@@ -48,7 +52,7 @@ class Signup extends React.Component
             return;
         }
 
-        //Request post la api pentru adaugat utilizator nou
+        //Request post la api pentru inserare utilizator nou
         axios.post('http://localhost:3000/utilizator', {
             EmailAddress: this.state.username,
             Parola: this.state.password
@@ -62,7 +66,7 @@ class Signup extends React.Component
             if(response.status === 201) //CREATED
             {
                 alert("Contul a fost creat!");
-
+                //redirectionare utilizator catre pagina de notite
                 window.location.href = "notite";
             }
             else
@@ -83,6 +87,7 @@ class Signup extends React.Component
         return(
             <div>
                 <div>
+                    {/* Formular Sign Up */}
                     <form onSubmit={this.handleSubmit}>
                         <input type="text" id="login" className="second" name="login" placeholder="email" onChange={this.handleUsernameChange}/>
                         <input type="password" id="password" className="third" name="login" placeholder="password" onChange={this.handlePasswordChange}/>
@@ -94,4 +99,5 @@ class Signup extends React.Component
     }
 }
 
+//pentru a face clasa vizibila spre utilizare din alte fisiere
 export default Signup;

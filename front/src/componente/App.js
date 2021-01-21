@@ -1,33 +1,35 @@
 import '../css/App.css';
 import Meniu from '../componente/Meniu';
 import Login from '../componente/Login';
-import Notita from '../componente/Notita';
 import Signup from '../componente/Signup';
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars } from '@fortawesome/free-solid-svg-icons'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import PaginaNotite from './PaginaNotite';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
-import PaginaNotite from './PaginaNotite';
+
 
 class App extends React.Component {
 
   constructor(props)
   {
     super(props);
+
+    //pentru butonul de afisare/ascundere meniu lateral
+    //stare initiala -> se afiseaza meniul
     this.state = {isToggleOn: false};
 
-    // This binding is necessary to make `this` work in the callback
+    // acest bind este necesar pentru a face `this` vizibil in callback
     this.handleClick = this.handleClick.bind(this);
   }
 
+  //handleClick pentru butonul de afisare/ascundere meniu lateral
   handleClick(e) {
-
     e.preventDefault();
     const element = document.getElementById("wrapper");
 
@@ -47,9 +49,12 @@ class App extends React.Component {
     );
   }
 
+  //evenimentul de logout
   logoutClick(e)
   {
+      //se sterge id-ul utilizatorului logat din localstorage
       localStorage.removeItem('id');
+      //se incarca pagina de login 
       window.location.href="login";
   }
 
@@ -57,8 +62,12 @@ class App extends React.Component {
 
     let elementeMeniuDeSus = undefined;
 
+    //verificam daca un utilizator este logat
+    //adica daca exista un id in local storage
     if(localStorage.getItem('id') === null)
     {
+      //daca nu exista id in local storage pentru utilizator
+      //afisam ca si elemente pentru bara de sus optiunile de "Log In" si "Sign Up"
       elementeMeniuDeSus = (
         <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
             <li className="nav-item active">
@@ -70,6 +79,8 @@ class App extends React.Component {
         </ul>);
     }
     else {
+      //daca exista id in local storage pentru utilizator
+      //afisam ca si element pentru bara de sus optiunea de "Log Out"
       elementeMeniuDeSus = (
         <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
           <li className="nav-item active">
@@ -85,6 +96,7 @@ class App extends React.Component {
             <Meniu />
             <div id="page-content-wrapper">
 
+              {/* bara de navigare sus, care contine butonul de afisare/ascundere meniu lateral si elementele de logare*/}
               <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                 <button className="btn btn-dark" id="menu-toggle" onClick={this.handleClick}>
                   <FontAwesomeIcon icon={faBars}/>
@@ -92,32 +104,33 @@ class App extends React.Component {
                 {elementeMeniuDeSus}
               </nav>
 
+
               <div className="container-fluid">
-              <Switch>
+                <Switch>
+                  {/*Pagina Log In */}
                   <Route path="/login">
                     <div className="text-center m-auto"  style={
                       {width : '30%'}
-                    }>
-                    <Login />
-                    </div>
-                  </Route>
-                  <Route path="/signup">
-                    <div className="text-center m-auto"  style={
-                      {width : '30%'}
                       }>
-                      <Signup />
+                      <Login />
                     </div>
                   </Route>
-                  <Route path="/notite">
-                      <PaginaNotite />
+
+                  {/*Pagina Sign Up */}
+                  <Route path="/signup">
+                  <div className="text-center m-auto"  style={
+                    {width : '30%'}
+                    }>
+                    <Signup />
+                  </div>
+
+                  {/* Pagina Notite */}
                   </Route>
-                  <Route path="/users">
-                      {/* <Users /> */}
+                    <Route path="/notite">
+                    <PaginaNotite />
                   </Route>
-                  <Route path="/">
-                      {/* <Home /> */}
-                  </Route>
-              </Switch> 
+                  
+                </Switch> 
               </div>
             </div>
           </Router>
@@ -127,4 +140,5 @@ class App extends React.Component {
   }
 }
 
+//pentru a face clasa vizibila spre utilizare din alte fisiere
 export default App;

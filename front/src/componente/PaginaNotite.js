@@ -9,6 +9,7 @@ class PaginaNotite extends React.Component
     {
         super(props);
 
+        //initializare
         this.state = {
             notite : []
         };
@@ -16,6 +17,10 @@ class PaginaNotite extends React.Component
         this.preiaNotite = this.preiaNotite.bind(this);
     }
 
+    //verificam deca exista un id in local storage
+    //daca nu exista dorim sa nu incarcam utilizatorului pagina de notite
+    //se va afisa un mesaj de tip alert care il va sugera utilizatorului sa se conecteze
+    //se va realiza redirectionarea automata spre pagina de "Log In"
     componentDidMount()
     {
         if(localStorage.getItem('id') === null)
@@ -26,9 +31,9 @@ class PaginaNotite extends React.Component
         this.preiaNotite();
     }
 
+    //Request get la api pentru preluare notite in functie de id-ul utilizatorului
     async preiaNotite()
     {
-        console.log(this);
         const response = await axios.get('http://localhost:3000/utilizator/' + localStorage.getItem("id") + "/notite", {},
         {
             headers: {
@@ -38,9 +43,8 @@ class PaginaNotite extends React.Component
 
         if(response.status === 200 || response.status === 304) //OK
         {
-            console.log("notite gasite!");
+            //populam notite din constructor cu notitele returnate
             this.setState({notite: response.data});
-            console.log(this.state.notite);
         }
         else
         {
@@ -54,9 +58,9 @@ class PaginaNotite extends React.Component
             <div className="d-flex wrap-content flex-wrap flex-row">
                 <NotitaAdaugare />
                 {
+                    //mapare elemente
                     this.state.notite.map((notita, index) => {     
-                        console.log("Entered");                 
-                        // Return the element. Also pass key     
+                        // returneaza elementul si paseaza cheia    
                         return (<Notita key={notita.IdNotita} notita={notita}/>) 
                     })
                 } 
@@ -65,4 +69,5 @@ class PaginaNotite extends React.Component
     }
 }
 
+//pentru a face clasa vizibila spre utilizare din alte fisiere
 export default PaginaNotite;

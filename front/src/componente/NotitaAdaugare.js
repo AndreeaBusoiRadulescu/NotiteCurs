@@ -12,6 +12,7 @@ class NotitaAdaugare extends React.Component
 
     render() {
         return(
+            //structura elementului pentru adaugare o notita noua
             <div className="card ml-3 mt-3" style={
                     {width: '18rem'}}>   
                 <div className="card-body text-center">
@@ -23,4 +24,5 @@ class NotitaAdaugare extends React.Component
     }
 }
 
+//pentru a face clasa vizibila spre utilizare din alte fisiere
 export default NotitaAdaugare;

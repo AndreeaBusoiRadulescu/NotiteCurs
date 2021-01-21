@@ -15,9 +15,9 @@ class Meniu extends React.Component
                 <div>
                     <div className="bg-light border-right" id="sidebar-wrapper">
                         <div className="sidebar-heading">Notite curs</div>
+                        {/* Meniu lateral stanga */}
                         <div className="list-group list-group-flush">  
-                            <Link to="/notite" className="list-group-item list-group-item-action bg-light">Notite</Link>            
-                            <Link to="/profil" className="list-group-item list-group-item-action bg-light">Profil</Link>
+                            <Link to="/notite" className="list-group-item list-group-item-action bg-light">Notite</Link>
                         </div>
                     </div>
 
@@ -27,4 +27,5 @@ class Meniu extends React.Component
     }
 }
 
+//pentru a face clasa vizibila spre utilizare din alte fisiere
 export default Meniu;
