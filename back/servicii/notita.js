@@ -4,13 +4,33 @@ import Notita from '../entitati/Notita.js';
 import Utilizator from '../entitati/Utilizator.js';
 import Atasament from '../entitati/Atasament.js';
 
+
+function validareNotita(notita){
+    if (!notita || Object.entries(notita).length === 0)
+    return { hasErrors: true, message: "Trebuie sa adugati informatii despre notita!" };
+
+if (!notita.Materie)
+    return { hasErrors: true, message: "Notita trebuie sa contina obligatoriu materia!" };
+
+if (!notita.UtilizatorId)
+    return { hasErrors: true, message: "UtilizatorId este obligatoriu!" };
+
+if (!notita.Continut)
+    return { hasErrors: true, message: "Continutul notitei este obligatoriu!" };
+
+return { hasErrors: false, message: "" };
+}
 //adaugare o notita noua
-export async function creareNotita(notita){
-   await Notita.create(notita);
+async function creareNotita(notita){
+    let error = validareNotita(notita);
+    if (error.hasErrors)
+        return error
+
+    return await Notita.create(notita);
 }
 
-export async function preluareNotiteDupaIdUtilizator(idUtilizator){
-    let user = await Utilizator.findByPk(idUtilizator);
+async function preluareNotiteDupaIdUtilizator(id){
+    let user = await Utilizator.findByPk(id);
     if(!user){
         return {
             code : 404,
@@ -22,7 +42,7 @@ export async function preluareNotiteDupaIdUtilizator(idUtilizator){
         {
             where: 
             {
-                UtilizatorId: idUtilizator
+                UtilizatorId: id
             }, 
             include: 
             {
@@ -38,39 +58,40 @@ export async function preluareNotiteDupaIdUtilizator(idUtilizator){
     }
 }
 
-export async function getByIdNotita(id){
+async function getByIdNotita(id){
     return await Notita.findByPk(id);
 }
 
-export async function getNotita(){
+async function getNotita(){
     return await Notita.findAll();
 }
 
-export async function modificareNotita(id, notita){
+async function modificareNotita(id, notita){
     if (parseInt(id) !== notita.IdNotita){
-        console.log("Entitatea este diferita de cea cu id-ul introdus");
-        return;
+        return { hasErrors: true, message: "Entitatea e diferita" };
     }
 
     let updateEntity = await getByIdNotita(id);
 
     if (!updateEntity)
     {
-        console.log("Nu exista notita cu acest id");
-        return;
+        return { hasErrors: true, message: "Nu exista o notita cu acest id." }; 
     }
 
-    return await updateEntity.update(notita);s
+    let error = validareNotita(notita);
+    if (error.hasErrors)
+        return error
+
+    return await updateEntity.update(notita);
 }
 
-export async function stergereNotita(id){
-    
+async function stergereNotita(id){
     let deleteEntity = await getByIdNotita(id);
 
     if (!deleteEntity)
-    {
-        console.log("Elementul nu exista, deci nu poate fi sters");
-        return;
-    }
-        return await deleteEntity.destroy();
+        return { hasErrors: true, message: "Nu exista o notita cu acest id!" };
+
+    return await deleteEntity.destroy();
 }
+
+export {creareNotita,preluareNotiteDupaIdUtilizator,getByIdNotita,getNotita,modificareNotita,stergereNotita};
