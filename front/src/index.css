@@ -60,6 +60,12 @@ margin-left: 0;
 #stergeNotita{
   position: absolute;
   top: 0;
-  right: 0;
+  left: 92%;
+  margin: 3px 3px 0 0;
+}
+#editareNotita{
+  position: absolute;
+  top: 0;
+  left: 80%;
   margin: 3px 3px 0 0;
 }

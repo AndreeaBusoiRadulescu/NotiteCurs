@@ -41,7 +41,7 @@ router.route('/notita/:id').get( async (req, res) => {
     }
 })
 
-router.route('/notita/:id').put( async (req, res) => {
+router.route('/editarenotita/:id').put( async (req, res) => {
     try {
         let person = await  modificareNotita(req.params.id, req.body);
 

@@ -1,6 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import {ruteNotite} from '../ApiRoutes';
+import { post, get, put,remove } from '../Calls';
+
+
 
 class Notita extends React.Component
 {
@@ -8,10 +13,29 @@ class Notita extends React.Component
     {
         super(props);
 
+        this.state = {
+            //notite: []
+        };
+
+
+        this.stergeNotita=this.stergeNotita.bind(this);
+
     }
 
-    handleClick(){
-      
+    async stergeNotita(id, index){
+        let res = await remove(ruteNotite, id);
+
+        if (res.hasErrors){
+            alert(res.message);
+            return;
+        }
+
+        let notite = this.state.notite;
+        notite.splice(index, 1);
+        this.setState({notite: notite});
+    }
+    editeazaNotita(){
+        window.location.href = "editarenotita";
     }
 
     render() {
@@ -22,8 +46,11 @@ class Notita extends React.Component
                 {width: '18rem'}
                 }>
                 <div className="card-body">
-                <a href="#" id="stergeNotita" onClick={this.handleClick}>           
-                          <FontAwesomeIcon icon={faTimes} size='1x' color="black"/>
+                <a href="#" id="editareNotita" onClick={this.editeazaNotita}>           
+                          <FontAwesomeIcon icon={faPencilAlt} size='1x' color="black"/>
+                       </a>
+                <a href="#" id="stergeNotita" onClick={this.stergeNotita}>           
+                          <FontAwesomeIcon icon={faTrashAlt} size='1x' color="black"/>
                        </a>
                     <h5 className="card-title">{this.props.notita.Materie} </h5>
                     <p className="card-text">{this.props.notita.Continut}</p>
