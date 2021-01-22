@@ -10,10 +10,12 @@ class FormularNotita extends React.Component
         //initializare
         this.state = {
             materie : "",
+           // idUtilizator:localStorage.id,
             continut : "",
             dataNotita : ""
         };
 
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.handleMaterieChange = this.handleMaterieChange.bind(this);
         this.handleContinutChange = this.handleContinutChange.bind(this);
         this.handleDataNotitaChange = this.handleDataNotitaChange.bind(this);
@@ -36,9 +38,10 @@ class FormularNotita extends React.Component
         //Request get la api pentru preluare valori
         axios.get('http://localhost:3000/formularnotita', {
             params: {
-                'Materie' : this.state.materie,
-                'Continut' : this.state.continut,
-                'Data notita': this.state.dataNotita
+                Materie: this.state.materie,
+                //UtilizatorId: this.state.idUtilizator,
+                Continut: this.state.continut,
+                DataNotita: this.state.dataNotita,
             }
         },
         {
@@ -47,7 +50,7 @@ class FormularNotita extends React.Component
             }
         })
         .then(function (response) {
-            if(response.status === 200) //OK
+            if(response.status === 201) //OK
             {
                 alert("A fost adaugata o notita!");
 

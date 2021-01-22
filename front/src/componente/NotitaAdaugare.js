@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import FormularNotita from '../componente/FormularNotita';
 
 class NotitaAdaugare extends React.Component
 {
@@ -9,6 +10,9 @@ class NotitaAdaugare extends React.Component
         super(props);
     }
   
+    handleClick(){
+        window.location.href = "formularnotita";
+    }
 
     render() {
         return(
@@ -17,7 +21,9 @@ class NotitaAdaugare extends React.Component
                     {width: '18rem'}}>   
                 <div className="card-body text-center">
                     <h5 className="card-title">Adaugare notita noua</h5>
+                    <a href="#" id="addNotita" onClick={this.handleClick}>
                     <FontAwesomeIcon icon={faPlusCircle} size='3x'/>
+                     </a> 
                 </div>
             </div>
         );

@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 class Notita extends React.Component
 {
@@ -6,6 +8,10 @@ class Notita extends React.Component
     {
         super(props);
 
+    }
+
+    handleClick(){
+      
     }
 
     render() {
@@ -16,7 +22,10 @@ class Notita extends React.Component
                 {width: '18rem'}
                 }>
                 <div className="card-body">
-                    <h5 className="card-title">{this.props.notita.Materie}</h5>
+                <a href="#" id="stergeNotita" onClick={this.handleClick}>           
+                          <FontAwesomeIcon icon={faTimes} size='1x' color="black"/>
+                       </a>
+                    <h5 className="card-title">{this.props.notita.Materie} </h5>
                     <p className="card-text">{this.props.notita.Continut}</p>
                 </div>
                 <div className="card-footer">

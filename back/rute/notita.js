@@ -10,8 +10,9 @@ import {stergereNotita} from '../servicii/notita.js';
 const router = express.Router(); //obtinem componenta de rutare a serverului
 
 //inregistram rutele
-router.route('/notita').post( async (req, res) => {
-    res.json(await creareNotita(req.body));
+router.route('/formularnotita').post( async (req, res) => {
+    let ret = await creareNotita(req.body);
+    res.status(ret.code).json(ret.res);
 })
 
 router.route('/notita').get( async (req, res) => {
