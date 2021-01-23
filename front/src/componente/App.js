@@ -13,6 +13,7 @@ import {
   Link
 } from "react-router-dom";
 import FormularNotita from './FormularNotita';
+import EditareNotita from './EditareNotita';
 
 
 class App extends React.Component {
@@ -127,7 +128,8 @@ class App extends React.Component {
 
                   {/* Pagina Notite */}
                   </Route>
-                    <Route path="/notite">
+
+                  <Route path="/notite">
                     <PaginaNotite />
                   </Route>
 
@@ -136,9 +138,20 @@ class App extends React.Component {
                   <div className="text-center m-auto"  style={
                     {width : '30%'}
                     }>
-                      <FormularNotita/>
+                      <FormularNotita />
                   </div>
                   </Route>
+
+
+                  {/*Pagina formular editare notita*/}
+                <Route path="/editarenotita/:IdNotita">
+                    <div className="text-center m-auto"  style={
+                        {width : '30%'}
+                        }>
+                        <EditareNotita/>
+                    </div>
+
+                </Route>
                   
                 </Switch> 
               </div>

@@ -2,40 +2,56 @@ import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import {ruteNotite} from '../ApiRoutes';
-import { post, get, put,remove } from '../Calls';
-
-
+import axios from "axios";
+import EditareNotita from './EditareNotita';
+import {Route} from 'react-router';
 
 class Notita extends React.Component
 {
     constructor(props)
     {
         super(props);
+        console.log(this.props);
 
         this.state = {
             //notite: []
         };
 
-
         this.stergeNotita=this.stergeNotita.bind(this);
-
+        this.editeazaNotita = this.editeazaNotita.bind(this);
     }
 
-    async stergeNotita(id, index){
-        let res = await remove(ruteNotite, id);
+    stergeNotita(){
+        //key = id din baza de date
+        console.log(this.props);
+        axios.delete('http://localhost:3000/notita/' + this.props.notita.IdNotita , {},
+        {
+            headers: {
+                "Content-type": "application/json",
+            }
+        })
+        .then(function (response) {
+            if(response.status === 200) //OK
+            {
+                alert("Notita stearsa!");
 
-        if (res.hasErrors){
-            alert(res.message);
-            return;
-        }
-
-        let notite = this.state.notite;
-        notite.splice(index, 1);
-        this.setState({notite: notite});
+                //redirectionare catre pagina de notite
+                window.location.href = "notite";
+            }
+            else
+            {
+                alert("Eroare!");
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+            alert("Eroare! " + error.response.data.message);
+        });
+        
     }
+    
     editeazaNotita(){
-        window.location.href = "editarenotita";
+        window.location.href = "editarenotita/" + this.props.notita.IdNotita;
     }
 
     render() {
@@ -57,7 +73,21 @@ class Notita extends React.Component
                 </div>
                 <div className="card-footer">
                     <small className="text-muted">{this.props.notita.DataNotita}</small>
+                    {
+                        this.props.notita.Atasamente.map((atasament, index) => {     
+                            // returneaza elementul si paseaza cheia    
+                            return (
+                            <div key={index}>
+                                <a key={index} href={atasament.SursaAtasament}>{"Atasament " + (index + 1)}
+                                </a>
+                            </div>
+                            ) 
+                        })
+                    }
                 </div>
+
+                
+
             </div>
         );
     }

@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 import sequelize from './dbConfig.js';
 import rutaUtilizator from './rute/utilizator.js';
 import rutaNotita from './rute/notita.js';
-import rutaAtasament from './rute/atasament.js';
 import Utilizator from './entitati/Utilizator.js';
 import Notita from './entitati/Notita.js';
 import Atasament from './entitati/Atasament.js';
@@ -11,7 +10,7 @@ import Atasament from './entitati/Atasament.js';
 
 let app = express(); //aplicatia server
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 Utilizator.hasMany(Notita, {as: "Notite", foreignKey: "UtilizatorId"});
@@ -74,7 +73,6 @@ sequelize
 
 app.use(rutaUtilizator); //notificam sa se foloseasca rutele pentru utilizator
 app.use(rutaNotita);
-app.use(rutaAtasament); //folosim rutele rotita
 
 let port = process.env.PORT || 8001;
 app.listen(port); //notificam sa se foloseasca portul specificat

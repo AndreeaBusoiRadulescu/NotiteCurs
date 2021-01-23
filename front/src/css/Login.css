@@ -1,5 +1,5 @@
 
-input[type=button], input[type=submit], input[type=reset]  {
+input[type=button], input[type=submit], input[type=reset], .fifth{
     background-color: #343a40;
     border: none;
     color: white;

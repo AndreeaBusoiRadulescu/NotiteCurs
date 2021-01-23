@@ -64,7 +64,7 @@ class Login extends React.Component
         })
         .catch(function (error) {
             console.log(error);
-            alert("Email si/sau parola gresite!");
+            alert("Notita nu a fost modificata! " + error.response.data.message);
         });
         
         event.preventDefault();

@@ -71,12 +71,12 @@ class Signup extends React.Component
             }
             else
             {
-                alert("Eroare la introducerea contului!");
+                alert("Eroare la introducerea contului!" );
             }
         })
         .catch(function (error) {
             console.log(error);
-            alert("Eroare la introducerea contului!");
+            alert("Eroare la introducerea contului! " + error.response.data.message);
         });
         
 
